@@ -1,5 +1,7 @@
 # Twilreapi::ActiveBiller::PinCambodia
 
+[![Build Status](https://travis-ci.org/dwilkie/twilreapi-active_biller-pin_cambodia.svg?branch=master)](https://travis-ci.org/dwilkie/twilreapi-active_biller-pin_cambodia)
+
 This gem contains billing logic for People In Need Cambodia for [Twilreapi](https://github.com/dwilkie/twilreapi).
 
 ## Installation
