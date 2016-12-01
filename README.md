@@ -25,7 +25,7 @@ The following environment variables can be set to determine the billing:
 * `TWILREAPI_ACTIVE_BILLER_PIN_CAMBODIA_PER_MINUTE_CALL_RATE_%{GATEWAY_NAME}_TO_${OPERATOR_ID}`:  The per minute call rate from `GATEWAY_NAME` to `OPERATOR_ID` in micro currency units. E.g. `35000` is equivalent to `$0.035`
 * `TWILREAPI_ACTIVE_BILLER_PIN_CAMBODIA_PER_MINUTE_CALL_RATE_%{GATEWAY_NAME}_TO_OTHER`: The per minute call rate from `GATEWAY_NAME` to any other operator in micro currency units.
 `TWILREAPI_ACTIVE_BILLER_PIN_CAMBODIA_BILL_BLOCK_SECONDS`: The amout of seconds in a bill block. E.g. `15` means 15 second bill blocks.
-`TWILREAPI_ACTIVE_BILLER_PIN_CAMBODIA_DEFAULT_COUNTRY_CODE`: The default country code to set if the destination number is local.
+* `TWILREAPI_ACTIVE_BILLER_PIN_CAMBODIA_DEFAULT_COUNTRY_CODE`: The default country code to set if the destination number is local.
 
 ## Development
 
