@@ -1,28 +1,29 @@
 # Twilreapi::ActiveBiller::PinCambodia
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/twilreapi/active_biller/pin_cambodia`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem contains billing logic for People In Need Cambodia for [Twilreapi](https://github.com/dwilkie/twilreapi).
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'twilreapi-active_biller-pin_cambodia'
+gem 'twilreapi-active_biller-pin_cambodia', :github => "dwilkie/twilreapi-active_biller-pin_cambodia"
 ```
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
+## Configuration
 
-    $ gem install twilreapi-active_biller-pin_cambodia
+To configure [Twilreapi](https://github.com/dwilkie/twilreapi) to use `Twilreapi::ActiveBiller::PinCambodia::Biller`, set the environment variable `ACTIVE_BILLER_CLASS_NAME=Twilreapi::ActiveBiller::PinCambodia::Biller`
 
-## Usage
+The following environment variables can be set to determine the billing:
 
-TODO: Write usage instructions here
+* `TWILREAPI_ACTIVE_BILLER_PIN_CAMBODIA_PER_MINUTE_CALL_RATE_%{GATEWAY_NAME}_TO_${OPERATOR_ID}`:  The per minute call rate from `GATEWAY_NAME` to `OPERATOR_ID` in micro currency units. E.g. `35000` is equivalent to `$0.035`
+* `TWILREAPI_ACTIVE_BILLER_PIN_CAMBODIA_PER_MINUTE_CALL_RATE_%{GATEWAY_NAME}_TO_OTHER`: The per minute call rate from `GATEWAY_NAME` to any other operator in micro currency units.
+`TWILREAPI_ACTIVE_BILLER_PIN_CAMBODIA_BILL_BLOCK_SECONDS`: The amout of seconds in a bill block. E.g. `15` means 15 second bill blocks.
+`TWILREAPI_ACTIVE_BILLER_PIN_CAMBODIA_DEFAULT_COUNTRY_CODE`: The default country code to set if the destination number is local.
 
 ## Development
 
@@ -32,8 +33,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/twilreapi-active_biller-pin_cambodia.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/dwilkie/twilreapi-active_biller-pin_cambodia.
 
 ## License
 
