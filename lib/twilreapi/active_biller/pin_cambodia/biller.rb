@@ -1,4 +1,5 @@
 require "twilreapi/active_biller/base"
+require "json"
 require_relative "torasup"
 
 class Twilreapi::ActiveBiller::PinCambodia::Biller < Twilreapi::ActiveBiller::Base
@@ -32,8 +33,12 @@ class Twilreapi::ActiveBiller::PinCambodia::Biller < Twilreapi::ActiveBiller::Ba
     Phony.normalize(number_to_normalize) if Phony.plausible?(number_to_normalize)
   end
 
+  def call_data_record
+    options[:call_data_record]
+  end
+
   def cdr
-    (options[:cdr] && options[:cdr].cdr) || {}
+    @cdr ||= JSON.parse((call_data_record && call_data_record.file.read) || "{}")
   end
 
   def variables

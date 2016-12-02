@@ -4,18 +4,15 @@ describe Twilreapi::ActiveBiller::PinCambodia::Biller do
   include EnvHelpers
 
   class DummyCdr
-    require 'json'
-
-    attr_accessor :raw_cdr, :cdr
+    attr_accessor :file
 
     def initialize(raw_cdr)
-      self.raw_cdr = raw_cdr
-      self.cdr = JSON.parse(raw_cdr)
+      self.file = StringIO.new(raw_cdr)
     end
   end
 
-  let(:sample_cdr_file) { "./spec/fixtures/cdr.json" }
-  let(:sample_cdr) { File.read(sample_cdr_file) }
+  let(:sample_cdr_path) { "./spec/fixtures/cdr.json" }
+  let(:sample_cdr) { File.read(sample_cdr_path) }
   let(:raw_cdr) { sample_cdr }
   let(:dummy_cdr) { DummyCdr.new(raw_cdr) }
 
@@ -66,8 +63,9 @@ describe Twilreapi::ActiveBiller::PinCambodia::Biller do
       }
     end
 
-    before do
-      subject.options = {:cdr => dummy_cdr}
+    def setup_scenario
+      super
+      subject.options = {:call_data_record => dummy_cdr}
     end
 
     context "where the call direction is inbound" do
