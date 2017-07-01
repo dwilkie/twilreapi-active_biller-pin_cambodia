@@ -20,6 +20,7 @@ describe Twilreapi::ActiveBiller::PinCambodia::Biller do
   let(:bill_block_seconds) { "15" }
   let(:default_country_code) { "855" }
   let(:per_minute_call_rate_pin_kh_01_to_smart) { 35000 }
+  let(:per_minute_call_rate_smart_host_to_smart) { 20000 }
   let(:per_minute_call_rate_pin_kh_01_to_other) { 75000 }
   let(:per_minute_call_rate_pin_kh_04_to_metfone) { 62000 }
   let(:per_minute_call_rate_pin_kh_04_to_other) { 52000 }
@@ -29,6 +30,7 @@ describe Twilreapi::ActiveBiller::PinCambodia::Biller do
       :"twilreapi_active_biller_pin_cambodia_bill_block_seconds" => bill_block_seconds,
       :"twilreapi_active_biller_pin_cambodia_default_country_code" => default_country_code,
       :"twilreapi_active_biller_pin_cambodia_per_minute_call_rate_pin_kh_01_to_smart" => per_minute_call_rate_pin_kh_01_to_smart,
+      :"twilreapi_active_biller_pin_cambodia_per_minute_call_rate_sip.smart.com.kh_to_smart" => per_minute_call_rate_smart_host_to_smart,
       :"twilreapi_active_biller_pin_cambodia_per_minute_call_rate_pin_kh_01_to_other" => per_minute_call_rate_pin_kh_01_to_other,
       :"twilreapi_active_biller_pin_cambodia_per_minute_call_rate_pin_kh_04_to_metfone" => per_minute_call_rate_pin_kh_04_to_metfone,
       :"twilreapi_active_biller_pin_cambodia_per_minute_call_rate_pin_kh_04_to_other" => per_minute_call_rate_pin_kh_04_to_other
@@ -45,11 +47,12 @@ describe Twilreapi::ActiveBiller::PinCambodia::Biller do
     let(:sip_gateway_name) { nil }
     let(:billsec) { nil }
     let(:sip_to_user) { nil }
+    let(:sip_to_host) { nil }
 
     let(:raw_cdr) {
       cdr = JSON.parse(sample_cdr)
       cdr_variables.delete_if { |k, v| v.nil? }.each do |key, value|
-        cdr["variables"][key] = value
+        cdr["variables"][key] = value == false ? nil : value
       end
       cdr.to_json
     }
@@ -59,7 +62,8 @@ describe Twilreapi::ActiveBiller::PinCambodia::Biller do
         "direction" => call_direction,
         "sip_gateway_name" => sip_gateway_name,
         "billsec" => billsec,
-        "sip_to_user" => sip_to_user
+        "sip_to_user" => sip_to_user,
+        "sip_to_host" => sip_to_host
       }
     end
 
@@ -100,6 +104,16 @@ describe Twilreapi::ActiveBiller::PinCambodia::Biller do
             context "to other" do
               let(:sip_to_user) { "012234567" }
               it { expect(result).to eq(18750) }
+            end
+          end
+
+          context "sip.smart.com.kh" do
+            let(:sip_gateway_name) { false }
+            let(:sip_to_host) { "sip.smart.com.kh" }
+
+            context "to smart" do
+              let(:sip_to_user) { "010234567" }
+              it { expect(result).to eq(5000) }
             end
           end
 

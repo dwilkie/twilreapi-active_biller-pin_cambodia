@@ -66,11 +66,11 @@ class Twilreapi::ActiveBiller::PinCambodia::Biller < Twilreapi::ActiveBiller::Ba
   end
 
   def per_minute_call_rate
-    gateway_name = variables["sip_gateway_name"]
+    gateway_name_or_host = variables["sip_gateway_name"] || variables["sip_to_host"]
     operator_id = destination_operator && destination_operator.id
     (
-      self.class.configuration("per_minute_call_rate_#{gateway_name}_to_#{operator_id}") ||
-      self.class.configuration("per_minute_call_rate_#{gateway_name}_to_#{OTHER_OPERATOR_KEY}") ||
+      self.class.configuration("per_minute_call_rate_#{gateway_name_or_host}_to_#{operator_id}") ||
+      self.class.configuration("per_minute_call_rate_#{gateway_name_or_host}_to_#{OTHER_OPERATOR_KEY}") ||
       DEFAULT_PER_MINUTE_CALL_RATE
     ).to_i
   end
